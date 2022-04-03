@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DreamDetailFragment">
+
+    <TextView
+        android:id="@+id/dream_title_label"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dream_title_label" />
+
+    <EditText
+        android:id="@+id/dream_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/dream_title_hint"
+        android:inputType="text" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/dream_fulfilled_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fulfilled"
+            
+            android:verticalScrollbarPosition="defaultPosition"
+            app:layout_constraintEnd_toStartOf="@+id/dream_deferred_checkbox"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/dream_deferred_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deferred"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/dream_fulfilled_checkbox"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/dream_entries_label"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entries" />
+
+
+
+    <Button
+        android:id="@+id/dream_entry_0_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Conceived"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/dream_entry_1_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/dream_entry_2_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/dream_entry_3_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fulfilled"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/dream_entry_4_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deferred"
+        android:visibility="invisible" />
+
+
+</LinearLayout>
