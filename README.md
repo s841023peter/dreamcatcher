@@ -1,0 +1,2 @@
+# DreamCatcher 
+The DreamCatcher software will be used in a variety of tasks. In many ways, the application is identical to BNR's CriminalIntent application. It's a list-detail application since it has both a list and a detail view, and both of these views will be implemented as fragments rather than activities. The list view appears when the application first launches. The list of dreams will be saved as a list of Dream objects, and you'll use RecyclerView to display it.
