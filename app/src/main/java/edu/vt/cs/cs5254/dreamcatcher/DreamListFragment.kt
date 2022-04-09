@@ -85,7 +85,11 @@ class DreamListFragment : Fragment() {
         return when (item.itemId) {
             R.id.add_dream -> {
                 val dream = Dream()
-                val dreamWithEntries = DreamWithEntries(dream, emptyList()) //Dream
+                val newEntries = mutableListOf<DreamEntry>()
+                newEntries += DreamEntry(kind = DreamEntryKind.CONCEIVED, dreamId = dream.id)
+
+
+                val dreamWithEntries = DreamWithEntries(dream, newEntries) //Dream
                 viewModel.addDream(dreamWithEntries)
                 callbacks?.onDreamSelected(dreamWithEntries.dream.id)   // dream?????
                 true

@@ -24,6 +24,8 @@ private const val TAG = "DetailFragment"
 private const val ARG_DREAM_ID = "dream_id"
 const val REQUEST_KEY = "request_key"
 const val ARG_NEW_DATE = "new_date"
+const val REQUEST_KEY_ADD_REFLECTION ="request_key_add_reflection"
+const val BUNDLE_KEY_REFLECTION_TEXT ="bundle_key_reflection_text"
 
 
 private val REFLECTION_BLUE = "#3498DB"
