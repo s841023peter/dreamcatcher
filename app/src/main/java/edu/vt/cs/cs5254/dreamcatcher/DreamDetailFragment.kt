@@ -14,12 +14,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.view.children
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import edu.vt.cs.cs5254.dreamcatcher.databinding.FragmentDreamDetailBinding
 import java.util.*
 
 private const val TAG = "DetailFragment"
 private const val ARG_DREAM_ID = "dream_id"
+const val REQUEST_KEY = "request_key"
+const val ARG_NEW_DATE = "new_date"
+
 
 private val REFLECTION_BLUE = "#3498DB"
 private val CONCEIVED_YELLOW = "#F4D03F"
@@ -36,9 +41,10 @@ class DreamDetailFragment : Fragment() {
         get() = _binding!!  //never null
 
     lateinit var buttonList: List<Button>
-    private val vm: DreamDetailViewModel by lazy {
-        ViewModelProvider(this).get(DreamDetailViewModel::class.java)
-    }
+//    private val vm: DreamDetailViewModel by lazy {
+//        ViewModelProvider(this).get(DreamDetailViewModel::class.java)
+//    }
+    private val vm: DreamDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +81,8 @@ class DreamDetailFragment : Fragment() {
 
         _binding = FragmentDreamDetailBinding.inflate(inflater, container, false)
         val view = binding.root
+
+
 
         buttonList = binding.root //view
             .children
@@ -117,20 +125,25 @@ class DreamDetailFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        val titleWatcher = object : TextWatcher {
-            override fun beforeTextChanged(
-                sequence: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(sequence: CharSequence?,
-                                       start: Int, before: Int, count: Int) {
-                dreamWithEntries.dream.title = sequence.toString()
-            }
-
-            override fun afterTextChanged(sequence: Editable?) { }
+//        val titleWatcher = object : TextWatcher {
+//            override fun beforeTextChanged(
+//                sequence: CharSequence?, start: Int, count: Int, after: Int) { }
+//            override fun onTextChanged(sequence: CharSequence?,
+//                                       start: Int, before: Int, count: Int) {
+//                dreamWithEntries.dream.title = sequence.toString()
+//            }
+//
+//            override fun afterTextChanged(sequence: Editable?) { }
+//        }
+//
+//        //
+//
+//        binding.dreamTitleText.addTextChangedListener(titleWatcher)  //text or label ?
+        
+        binding.dreamTitleText.doOnTextChanged { text, start, before, count ->
+            dreamWithEntries.dream.title = text.toString()
         }
 
-        //
-
-        binding.dreamTitleText.addTextChangedListener(titleWatcher)  //text or label ?
         binding.dreamFulfilledCheckbox.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 dreamWithEntries.dream.isFulfilled = isChecked
@@ -172,6 +185,19 @@ class DreamDetailFragment : Fragment() {
                 }
                 refreshView()
             }
+        }
+
+//        binding.dreamDate.setOnClickListener {
+//            DatePickerFragment.newInstance(dreamWithEntries.dream.date, REQUEST_KEY)  // crime.date
+//                .show(parentFragmentManager, REQUEST_KEY)
+//        }
+
+        parentFragmentManager.setFragmentResultListener(
+            REQUEST_KEY,
+            viewLifecycleOwner)
+        { _, bundle ->
+            dreamWithEntries.dream.date = bundle.getSerializable(ARG_NEW_DATE) as Date  // crime.date
+            refreshView()
         }
 
     }

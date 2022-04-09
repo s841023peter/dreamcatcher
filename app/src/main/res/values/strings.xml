@@ -7,6 +7,7 @@
     <string name="dream_item_title">Dream Title</string>
     <string name="dream_item_date">Dream Date</string>
     <string name="handcuffs">handcuffs</string>
+    <string name="item">Item</string>
 </resources>
 
 <!--crime remov-->
