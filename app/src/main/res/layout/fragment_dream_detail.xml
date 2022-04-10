@@ -11,7 +11,7 @@
         android:id="@+id/dream_photo"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:background="#3F51B5"
+        android:background="#3fb5a7"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />

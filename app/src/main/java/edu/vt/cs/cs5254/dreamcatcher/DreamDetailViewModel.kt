@@ -16,7 +16,7 @@ class DreamDetailViewModel : ViewModel() {
 
     fun loadDream(dreamId: UUID) {
         dreamIdLiveData.value = dreamId     }
-    fun saveDream(dreamWithEntries: DreamWithEntries) {
+    fun saveDreamWithEntries(dreamWithEntries: DreamWithEntries) {
         dreamRepository.updateDreamWithEntries(dreamWithEntries)
     }
 }

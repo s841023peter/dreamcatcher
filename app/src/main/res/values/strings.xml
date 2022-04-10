@@ -6,14 +6,13 @@
     <string name="dream_solved_label">Solved</string>
     <string name="dream_item_title">Dream Title</string>
     <string name="dream_item_date">Dream Date</string>
-    <string name="handcuffs">handcuffs</string>
-    <string name="item">Item</string>
 
 
-    <string name="dream_title_text" ></string>
-    <string name="dream_fulfilled_checkbox" ></string>
-    <string name="dream_deferred_checkbox" ></string>
-    <string name="dream_entries_label" ></string>
+
+    <string name="dream_title_text" >Enter a dream.</string>
+    <string name="dream_fulfilled_checkbox" >Fulfilled</string>
+    <string name="dream_deferred_checkbox" >Deferred</string>
+    <string name="dream_entries_label" >Entries</string>
 
 
 </resources>
