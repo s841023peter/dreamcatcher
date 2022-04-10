@@ -22,6 +22,7 @@ import androidx.core.view.children
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.vt.cs.cs5254.dreamcatcher.databinding.FragmentDreamDetailBinding
@@ -52,7 +53,7 @@ private val FULFILLED_GREEN = "#27AE60"
 
 
 class DreamDetailFragment : Fragment() {
-    private var adapter: DreamDetailFragment.DreamEntryAdapter? = null
+    private var adapter: DreamEntryAdapter? = null
 
     private lateinit var dreamWithEntries: DreamWithEntries
 
@@ -160,6 +161,16 @@ class DreamDetailFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+
+        val itemTouchHelper = ItemTouchHelper(
+            SwipeToDeleteCallback(
+                binding.dreamEntryRecyclerView.adapter!! as DreamEntryAdapter,
+                0,
+                ItemTouchHelper.LEFT
+            )
+        )
+        itemTouchHelper.attachToRecyclerView(binding.dreamEntryRecyclerView)
 
         binding.dreamTitleText.doOnTextChanged { text, start, before, count ->
             dreamWithEntries.dream.title = text.toString()
@@ -302,10 +313,11 @@ class DreamDetailFragment : Fragment() {
         }
     }
 
+    //TODO
     private fun getSharedDream(): String {
-        val stateString = when {
-            dreamWithEntries.dream.isFulfilled -> {
-                getString(R.string.share_dream_fulfilled)
+                    val stateString = when {
+                        dreamWithEntries.dream.isFulfilled -> {
+                            getString(R.string.share_dream_fulfilled)
             }
             dreamWithEntries.dream.isDeferred -> {
                 getString(R.string.share_dream_deferred)
@@ -314,18 +326,19 @@ class DreamDetailFragment : Fragment() {
                 ""
             }
         }
-        val dreamTitleString = dreamWithEntries.dream.title
-        val conceivedDate = dreamWithEntries.dreamEntries.toMutableList().elementAt(0).date
-        val dateString = DateFormat.format("MMM dd, yyyy", conceivedDate)
+        val dreamTitle = dreamWithEntries.dream.title
+        val conceiveDate = dreamWithEntries.dreamEntries.toMutableList().elementAt(0).date
+        val date = DateFormat.format("MMM dd, yyyy", conceiveDate)
         var entriesTextList = mutableListOf<String>()
-        dreamWithEntries.dreamEntries.filter { dreamEntry -> dreamEntry.kind == DreamEntryKind.REFLECTION }
-            .forEach { dreamEntry -> entriesTextList += ("- " + dreamEntry.text) }
-        val reflectionTextString = entriesTextList.joinToString(separator = "\n")
+        dreamWithEntries.dreamEntries
+            .filter { it -> it.kind == DreamEntryKind.REFLECTION }
+            .forEach { it -> entriesTextList += ("- " + it.text) }
+        val reflectionText = entriesTextList.joinToString(separator = "\n")
         return getString(
             R.string.dream_share,
-            dreamTitleString,
-            dateString,
-            reflectionTextString,
+            dreamTitle,
+            date,
+            reflectionText,
             stateString
         )
     }
@@ -442,10 +455,10 @@ class DreamDetailFragment : Fragment() {
 
 
     private inner class DreamEntryAdapter(var dreamEntries: List<DreamEntry>) :
-        RecyclerView.Adapter<DreamDetailFragment.DreamEntryHolder>() {
+        RecyclerView.Adapter<DreamEntryHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int
-        ): DreamDetailFragment.DreamEntryHolder {
+        ): DreamEntryHolder {
             val itemBinding = ListItemDreamEntryBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)
             return DreamEntryHolder(itemBinding)
@@ -453,7 +466,7 @@ class DreamDetailFragment : Fragment() {
         //
 
         override fun getItemCount() = dreamEntries.size
-        override fun onBindViewHolder(holder: DreamDetailFragment.DreamEntryHolder, position: Int) {
+        override fun onBindViewHolder(holder: DreamEntryHolder, position: Int) {
             val dream = dreamEntries[position]
             //onBindViewHolder every time when scroll, so it's more frequently
             holder.bind(dream)
@@ -461,17 +474,38 @@ class DreamDetailFragment : Fragment() {
 
 
         fun deleteItem(position: Int) {
-            val recentlyDeletedItem = dreamEntries[position];
-            val recentlyDeletedItemPosition = position;
+            val recentlyDeletedItem = dreamEntries[position]
             if (recentlyDeletedItem.kind == DreamEntryKind.REFLECTION) {
                 dreamWithEntries.dreamEntries =
                     dreamWithEntries.dreamEntries.filter { it.id != recentlyDeletedItem.id }
-                //notifyItemRemoved(position)
             }
             refreshView()
         }
     }
 
+
+    private inner class SwipeToDeleteCallback(
+        adapter: RecyclerView.Adapter<DreamEntryHolder>,
+        dragDirs: Int,
+        swipeDirs: Int
+    ) :
+        ItemTouchHelper.SimpleCallback(dragDirs, swipeDirs) {
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position: Int = viewHolder.adapterPosition
+            adapter?.deleteItem(position)
+        }
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+
+
+    }
 
 //        override fun onClick(v: View) {
 //            callbacks?.onDreamSelected(dream.id) //view model
