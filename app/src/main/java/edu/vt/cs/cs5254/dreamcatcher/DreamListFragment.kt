@@ -84,12 +84,12 @@ class DreamListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_dream -> {
-                val dream = Dream()
-                val newEntries = mutableListOf<DreamEntry>()
-                newEntries += DreamEntry(kind = DreamEntryKind.CONCEIVED, dreamId = dream.id)
+//                val dream = Dream()
+//                val newEntries = mutableListOf<DreamEntry>()
+//                newEntries += DreamEntry(kind = DreamEntryKind.CONCEIVED, dreamId = dream.id)
 
 
-                val dreamWithEntries = DreamWithEntries(dream, newEntries) //Dream
+                val dreamWithEntries = DreamWithEntries(Dream(), emptyList()) //Dream
                 viewModel.addDream(dreamWithEntries)
                 callbacks?.onDreamSelected(dreamWithEntries.dream.id)   // dream?????
                 true

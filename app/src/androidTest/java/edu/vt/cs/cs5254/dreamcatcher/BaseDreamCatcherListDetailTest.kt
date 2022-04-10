@@ -80,13 +80,13 @@ class BaseDreamCatcherListDetailTest {
             ))
     }
 
-    @Test
-    fun base_detailViewDream2HasReflectionText() {
-        onView(withId(R.id.dream_recycler_view))
-            .perform(actionOnItemAtPosition<DreamListFragment.DreamHolder>(2, click()))
-        onView(withId(R.id.dream_entry_1_button))
-            .check(matches(withText(containsString("Dream Entry 2A"))))
-    }
+//    @Test
+//    fun base_detailViewDream2HasReflectionText() {
+//        onView(withId(R.id.dream_recycler_view))
+//            .perform(actionOnItemAtPosition<DreamListFragment.DreamHolder>(2, click()))
+//        onView(withId(R.id.dream_entry_1_button))
+//            .check(matches(withText(containsString("Dream Entry 2A"))))
+//    }
 
     @Test
     fun base_detailViewDream2HasTitleDream2() {
@@ -96,16 +96,16 @@ class BaseDreamCatcherListDetailTest {
             .check(matches(withText("Dream #2")))
     }
 
-    @Test
-    fun base_detailViewDream2Button3HasTextFulfilled() {
-        onView(withId(R.id.dream_recycler_view))
-            .perform(actionOnItemAtPosition<DreamListFragment.DreamHolder>(2, click()))
-        onView(withId(R.id.dream_entry_3_button))
-            .check(matches(anyOf(
-                withText(containsString("Fulfilled")),
-                withText(containsString("fulfilled")),
-                withText(containsString("FULFILLED")))))
-    }
+//    @Test
+//    fun base_detailViewDream2Button3HasTextFulfilled() {
+//        onView(withId(R.id.dream_recycler_view))
+//            .perform(actionOnItemAtPosition<DreamListFragment.DreamHolder>(2, click()))
+//        onView(withId(R.id.dream_entry_3_button))
+//            .check(matches(anyOf(
+//                withText(containsString("Fulfilled")),
+//                withText(containsString("fulfilled")),
+//                withText(containsString("FULFILLED")))))
+//    }
 
     @Test
     fun base_detailViewDream2ClickFulfilledClickBack_ListViewDream2HasNoIcon() {
